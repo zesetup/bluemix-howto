@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    name: tomcat8store
+  name: tomcat8store
+spec:
+  containers:
+  - image: registry.eu-de.bluemix.net/maks_s/tomcat-8.5:3
+    imagePullPolicy: IfNotPresent
+    name: tomcat8
+    ports:
+    - containerPort: 8080
+      protocol: TCP
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: default-token-sqgw8
+      readOnly: true
+    - mountPath: /var/data
+      name: tomcat-storage
+  restartPolicy: Always
+  volumes:
+  - name: default-token-sqgw8
+    secret:
+      defaultMode: 420
+      secretName: default-token-sqgw8
+  - name: tomcat-storage
+    persistentVolumeClaim:
+      claimName: tomcat-volume-claim
