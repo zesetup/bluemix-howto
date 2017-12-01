@@ -23,11 +23,13 @@ spec:
         run: tomcat8store
     spec:
       containers:
-      - image: registry.eu-de.bluemix.net/maks_s/tomcat-8.5:3
+      - image: registry.eu-de.bluemix.net/maks_s/tomcat-8.5:7
         imagePullPolicy: IfNotPresent
         name: tomcat8
         ports:
         - containerPort: 8080
+          protocol: TCP
+        - containerPort: 8443
           protocol: TCP
         volumeMounts:
         - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
